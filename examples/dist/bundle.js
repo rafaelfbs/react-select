@@ -160,8 +160,6 @@ var Async = (function (_Component) {
 					isLoading: true
 				});
 			}
-
-			return inputValue;
 		}
 	}, {
 		key: '_onInputChange',
@@ -171,19 +169,24 @@ var Async = (function (_Component) {
 			var ignoreCase = _props.ignoreCase;
 			var onInputChange = _props.onInputChange;
 
+			var transformedInputValue = inputValue;
+
 			if (ignoreAccents) {
-				inputValue = (0, _utilsStripDiacritics2['default'])(inputValue);
+				transformedInputValue = (0, _utilsStripDiacritics2['default'])(transformedInputValue);
 			}
 
 			if (ignoreCase) {
-				inputValue = inputValue.toLowerCase();
+				transformedInputValue = transformedInputValue.toLowerCase();
 			}
 
 			if (onInputChange) {
-				onInputChange(inputValue);
+				onInputChange(transformedInputValue);
 			}
 
-			return this.loadOptions(inputValue);
+			this.loadOptions(transformedInputValue);
+
+			// Return the original input value to avoid modifying the user's view of the input while typing.
+			return inputValue;
 		}
 	}, {
 		key: 'inputValue',
@@ -265,7 +268,7 @@ function defaultChildren(props) {
 };
 module.exports = exports['default'];
 
-},{"./Select":"react-select","./utils/stripDiacritics":10,"react":undefined}],2:[function(require,module,exports){
+},{"./Select":"@rafaelfbs/react-select","./utils/stripDiacritics":10,"react":undefined}],2:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -323,7 +326,7 @@ var AsyncCreatable = _react2['default'].createClass({
 
 module.exports = AsyncCreatable;
 
-},{"./Select":"react-select","react":undefined}],3:[function(require,module,exports){
+},{"./Select":"@rafaelfbs/react-select","react":undefined}],3:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -641,7 +644,7 @@ function shouldKeyDownEventCreateNewOption(_ref6) {
 
 module.exports = Creatable;
 
-},{"./Select":"react-select","./utils/defaultFilterOptions":8,"./utils/defaultMenuRenderer":9,"react":undefined}],4:[function(require,module,exports){
+},{"./Select":"@rafaelfbs/react-select","./utils/defaultFilterOptions":8,"./utils/defaultMenuRenderer":9,"react":undefined}],4:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -1031,7 +1034,7 @@ module.exports = function stripDiacritics(str) {
 	return str;
 };
 
-},{}],"react-select":[function(require,module,exports){
+},{}],"@rafaelfbs/react-select":[function(require,module,exports){
 /*!
   Copyright (c) 2016 Jed Watson.
   Licensed under the MIT License (MIT), see
