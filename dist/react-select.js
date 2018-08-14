@@ -161,8 +161,6 @@ var Async = (function (_Component) {
 					isLoading: true
 				});
 			}
-
-			return inputValue;
 		}
 	}, {
 		key: '_onInputChange',
@@ -172,19 +170,24 @@ var Async = (function (_Component) {
 			var ignoreCase = _props.ignoreCase;
 			var onInputChange = _props.onInputChange;
 
+			var transformedInputValue = inputValue;
+
 			if (ignoreAccents) {
-				inputValue = (0, _utilsStripDiacritics2['default'])(inputValue);
+				transformedInputValue = (0, _utilsStripDiacritics2['default'])(transformedInputValue);
 			}
 
 			if (ignoreCase) {
-				inputValue = inputValue.toLowerCase();
+				transformedInputValue = transformedInputValue.toLowerCase();
 			}
 
 			if (onInputChange) {
-				onInputChange(inputValue);
+				onInputChange(transformedInputValue);
 			}
 
-			return this.loadOptions(inputValue);
+			this.loadOptions(transformedInputValue);
+
+			// Return the original input value to avoid modifying the user's view of the input while typing.
+			return inputValue;
 		}
 	}, {
 		key: 'inputValue',
